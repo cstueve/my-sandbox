@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>An Important Organizational Update</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: #f3f3f0;
+      color: #181818;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .shell {
+      width: min(92vw, 760px);
+      min-height: 560px;
+      background: white;
+      border: 1px solid #deded8;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.12);
+      border-radius: 24px;
+      padding: 44px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease;
+    }
+
+    .screen {
+      display: none;
+      min-height: 470px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-direction: column;
+      animation: fade 0.45s ease;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #777;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 7vw, 64px);
+      line-height: 0.98;
+      margin: 0 0 22px;
+      letter-spacing: -0.04em;
+    }
+
+    h2 {
+      font-size: clamp(26px, 5vw, 42px);
+      margin: 0 0 18px;
+      letter-spacing: -0.03em;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.55;
+      max-width: 560px;
+      margin: 0 0 22px;
+    }
+
+    .small {
+      font-size: 14px;
+      color: #747474;
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      background: #171717;
+      color: white;
+      padding: 14px 22px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      margin: 6px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .secondary {
+      background: #ecece8;
+      color: #171717;
+    }
+
+    .loading {
+      width: min(420px, 84%);
+      height: 12px;
+      background: #ecece8;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 18px 0 10px;
+    }
+
+    .loading span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: #171717;
+      animation: load 3s ease forwards;
+    }
+
+    @keyframes load {
+      0% { width: 0%; }
+      85% { width: 99%; }
+      100% { width: 99%; }
+    }
+
+    .status {
+      font-size: 14px;
+      color: #777;
+      min-height: 24px;
+      margin-bottom: 18px;
+    }
+
+    .checklist {
+      width: min(520px, 100%);
+      text-align: left;
+      margin: 10px auto 24px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist li {
+      padding: 12px 14px;
+      margin: 8px 0;
+      background: #f7f7f4;
+      border-radius: 12px;
+      font-size: 17px;
+    }
+
+    .checklist li::before {
+      content: "✓";
+      margin-right: 10px;
+      font-weight: 700;
+    }
+
+    .reaction {
+      min-height: 28px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .chaos {
+      background:
+        radial-gradient(circle at 12% 10%, #ffe96a 0 10%, transparent 11%),
+        radial-gradient(circle at 88% 18%, #ff8ac5 0 9%, transparent 10%),
+        radial-gradient(circle at 20% 86%, #8fe7ff 0 12%, transparent 13%),
+        linear-gradient(135deg, #fff4b8, #ffd9eb 48%, #dff7ff);
+    }
+
+    .job-reveal {
+      font-size: clamp(48px, 10vw, 94px);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+      transform: rotate(-2deg);
+    }
+
+    .quit {
+      font-size: clamp(76px, 16vw, 150px);
+      font-weight: 900;
+      line-height: 0.82;
+      letter-spacing: -0.08em;
+      margin: 16px 0 28px;
+    }
+
+    .note {
+      padding: 10px 15px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 12px;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .photo {
+      width: 205px;
+      height: 205px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 50% 40%;
+      border: 7px solid white;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.18);
+      margin-bottom: 20px;
+    }
+
+    .win {
+      font-size: clamp(60px, 12vw, 110px);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      margin: 6px 0 0;
+    }
+
+    .alert {
+      background: #fff4cc;
+      border: 1px solid #e3cf76;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin: 12px 0 18px;
+      font-size: 15px;
+      max-width: 520px;
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 16px;
+      top: -20px;
+      z-index: 99;
+      animation: fall linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translate3d(var(--drift), 110vh, 0) rotate(840deg);
+      }
+    }
+
+    .dodgy {
+      position: relative;
+    }
+
+    @media (max-width: 600px) {
+      .shell {
+        width: 100vw;
+        min-height: 100vh;
+        border-radius: 0;
+        padding: 28px 20px;
+      }
+
+      .screen {
+        min-height: calc(100vh - 56px);
+      }
+
+      .button-row {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .button-row button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="shell" id="shell">
+
+    <!-- SCREEN 1 -->
+    <section class="screen active" id="s1">
+      <div class="eyebrow">Confidential • Organizational Communication</div>
+
+      <h1>An Important Organizational Update</h1>
+
+      <p>
+        Please review the following change-management communication.
+      </p>
+
+      <button onclick="show(2)">
+        Begin mandatory review
+      </button>
+    </section>
+
+
+    <!-- SCREEN 2 -->
+    <section class="screen" id="s2">
+      <div class="eyebrow">Readiness Assessment</div>
+
+      <h2>Pre-announcement checklist</h2>
+
+      <ul class="checklist">
+        <li>Strategic alignment</li>
+        <li>Stakeholder communication</li>
+        <li>Succession planning</li>
+        <li>Emotionally preparing Claire</li>
+      </ul>
+
+      <button onclick="prepared()">
+        I acknowledge that I am emotionally prepared
+      </button>
+
+      <div class="reaction" id="preparedReaction"></div>
+
+      <button
+        id="preparedContinue"
+        style="display:none;"
+        onclick="show(3)"
+      >
+        Continue
+      </button>
+    </section>
+
+
+    <!-- SCREEN 3 -->
+    <section class="screen" id="s3">
+      <div class="eyebrow">Background</div>
+
+      <h2>
+        You once shared your artistic interpretation of quitting.
+      </h2>
+
+      <p>
+        Unfortunately, your work inspired a direct report.
+      </p>
+
+      <button onclick="showProcessing()">
+        View consequences
+      </button>
+    </section>
+
+
+    <!-- SCREEN 4 -->
+    <section class="screen" id="s4">
+      <div class="eyebrow">System Processing</div>
+
+      <h2>Calculating organizational impact...</h2>
+
+      <div class="loading">
+        <span></span>
+      </div>
+
+      <div class="status" id="statusText">
+        Reviewing retention risk...
+      </div>
+
+      <button
+        id="processingContinue"
+        style="display:none;"
+        onclick="revealJob()"
+      >
+        Continue
+      </button>
+    </section>
+
+
+    <!-- SCREEN 5 -->
+    <section class="screen chaos" id="s5">
+      <div class="eyebrow" style="color:#333;">
+        Breaking News
+      </div>
+
+      <div class="job-reveal">
+        I GOT A NEW JOB! 🎉
+      </div>
+
+      <p style="margin-top: 28px;">
+        Please remain calm.
+      </p>
+
+      <div class="button-row">
+        <button onclick="calmResponse()">
+          I am calm
+        </button>
+
+        <button onclick="notCalmResponse()">
+          I am absolutely not calm
+        </button>
+      </div>
+
+      <div class="reaction" id="calmReaction"></div>
+
+      <button
+        id="jobContinue"
+        style="display:none;"
+        onclick="show(6)"
+      >
+        Continue
+      </button>
+    </section>
+
+
+    <!-- SCREEN 6 -->
+    <section class="screen" id="s6">
+      <div class="eyebrow">Manager Action Required</div>
+
+      <h2>Please select the appropriate next action.</h2>
+
+      <div class="button-row">
+        <button onclick="deny('Congrats selected. Acceptable.')">
+          Congratulate Chelsea
+        </button>
+
+        <button onclick="deny('Follow-up questions have been queued indefinitely.')">
+          Ask follow-up questions
+        </button>
+
+        <button onclick="deny('Retention attempt unsuccessful.')">
+          Beg her to reconsider
+        </button>
+
+        <button
+          class="dodgy"
+          id="quitFirst"
+          onmouseenter="runAway()"
+          onclick="runAway()"
+        >
+          Quit first
+        </button>
+      </div>
+
+      <div class="reaction" id="actionReaction"></div>
+
+      <button
+        id="actionContinue"
+        style="display:none;"
+        onclick="show(7)"
+      >
+        Continue
+      </button>
+    </section>
+
+
+    <!-- SCREEN 7 -->
+    <section class="screen chaos" id="s7">
+      <div class="eyebrow" style="color:#333;">
+        Official Notice*
+      </div>
+
+      <div class="quit">
+        I QUIT.
+      </div>
+
+      <div class="note">
+        professionally, respectfully, and with appropriate notice
+        because apparently there are procedures
+      </div>
+
+      <button onclick="show(8)">
+        This feels personal
+      </button>
+    </section>
+
+
+    <!-- SCREEN 8 -->
+    <section class="screen" id="s8">
+      <img
+        class="photo"
+        src="us.jpeg"
+        alt="The two of us"
+      />
+
+      <p style="font-size:21px;">
+        In all seriousness, I love you and I am SO grateful
+        I got to have you as my boss.
+      </p>
+
+      <p>
+        Unfortunately, you are no longer permitted to quit before me.
+      </p>
+
+      <div class="win">
+        I WIN. 🏆
+      </div>
+
+      <div class="alert">
+        Manager retention attempt unsuccessful.
+      </div>
+
+      <p class="small">
+        Formal resignation letter forthcoming.
+        Please direct all complaints to HR.
+      </p>
+    </section>
+
+  </main>
+
+
+  <script>
+    function show(n) {
+      document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+      });
+
+      document.getElementById("s" + n).classList.add("active");
+
+      const shell = document.getElementById("shell");
+
+      if (n === 5 || n === 7) {
+        shell.className = "shell chaos";
+      } else {
+        shell.className = "shell";
+      }
+
+      if (n === 8) {
+        confetti(55);
+      }
+    }
+
+
+    function prepared() {
+      document.getElementById("preparedReaction").textContent =
+        "Great. That makes one of us.";
+
+      document.getElementById("preparedContinue").style.display =
+        "inline-block";
+    }
+
+
+    function showProcessing() {
+      show(4);
+
+      const status = document.getElementById("statusText");
+
+      setTimeout(() => {
+        status.textContent = "Assessing emotional fallout...";
+      }, 900);
+
+      setTimeout(() => {
+        status.textContent = "Calculating emotional damage...";
+      }, 1800);
+
+      setTimeout(() => {
+        status.textContent = "99% complete. Naturally.";
+      }, 2700);
+
+      setTimeout(() => {
+        document.getElementById("processingContinue").style.display =
+          "inline-block";
+      }, 3100);
+    }
+
+
+    function revealJob() {
+      show(5);
+      confetti(100);
+    }
+
+
+    function calmResponse() {
+      document.getElementById("calmReaction").textContent =
+        "This response has been flagged as suspicious.";
+
+      document.getElementById("jobContinue").style.display =
+        "inline-block";
+    }
+
+
+    function notCalmResponse() {
+      document.getElementById("calmReaction").textContent =
+        "Valid.";
+
+      document.getElementById("jobContinue").style.display =
+        "inline-block";
+    }
+
+
+    function deny(message) {
+      document.getElementById("actionReaction").textContent =
+        message + " Request denied.";
+
+      document.getElementById("actionContinue").style.display =
+        "inline-block";
+    }
+
+
+    function runAway() {
+      const button = document.getElementById("quitFirst");
+
+      const x = Math.random() * 260 - 130;
+      const y = Math.random() * 120 - 60;
+
+      button.style.transform =
+        `translate(${x}px, ${y}px)`;
+
+      document.getElementById("actionReaction").textContent =
+        "Nice try.";
+
+      document.getElementById("actionContinue").style.display =
+        "inline-block";
+    }
+
+
+    function confetti(count) {
+      const colors = [
+        "#ff4d8d",
+        "#ffd93d",
+        "#50d5ff",
+        "#7ed957",
+        "#9b6cff",
+        "#ff7a45"
+      ];
+
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement("div");
+
+        piece.className = "confetti";
+
+        piece.style.left =
+          Math.random() * 100 + "vw";
+
+        piece.style.background =
+          colors[Math.floor(Math.random() * colors.length)];
+
+        piece.style.setProperty(
+          "--drift",
+          (Math.random() * 260 - 130) + "px"
+        );
+
+        piece.style.animationDuration =
+          (2.1 + Math.random() * 2.2) + "s";
+
+        piece.style.animationDelay =
+          (Math.random() * 0.35) + "s";
+
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+          piece.remove();
+        }, 5000);
+      }
+    }
+  </script>
+
+</body>
+</html>
